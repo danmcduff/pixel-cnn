@@ -51,7 +51,7 @@ def discretized_mix_logistic_loss(x, l, sum_all=True):
                     * x[:, :, :, 0, :], [xs[0], xs[1], xs[2], 1, nr_mix])
     m3 = tf.reshape(means[:, :, :, 2, :] + coeffs[:, :, :, 1, :] * x[:, :, :, 0, :] +
                     coeffs[:, :, :, 2, :] * x[:, :, :, 1, :], [xs[0], xs[1], xs[2], 1, nr_mix])
-    means = tf.concat([tf.reshape(means[:, :, :, 0, :], [
+    means = tf.concat_v2([tf.reshape(means[:, :, :, 0, :], [
                       xs[0], xs[1], xs[2], 1, nr_mix]), m2, m3], 3)
     centered_x = x - means
     inv_stdv = tf.exp(-log_scales)
