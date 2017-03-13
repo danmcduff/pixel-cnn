@@ -14,7 +14,7 @@ def int_shape(x):
 def concat_elu(x):
     """ like concatenated ReLU (http://arxiv.org/abs/1603.05201), but then with ELU """
     axis = len(x.get_shape()) - 1
-    return tf.nn.elu(tf.concat([x, -x], axis))
+    return tf.nn.elu(tf.concat_v2([x, -x], axis))
 
 
 def log_sum_exp(x):
@@ -116,7 +116,7 @@ def sample_from_discretized_mix_logistic(l, nr_mix):
         x[:, :, :, 1] + coeffs[:, :, :, 0] * x0, -1.), 1.)
     x2 = tf.minimum(tf.maximum(
         x[:, :, :, 2] + coeffs[:, :, :, 1] * x0 + coeffs[:, :, :, 2] * x1, -1.), 1.)
-    return tf.concat([tf.reshape(x0, xs[:-1] + [1]), tf.reshape(x1, xs[:-1] + [1]), tf.reshape(x2, xs[:-1] + [1])], 3)
+    return tf.concat_v2([tf.reshape(x0, xs[:-1] + [1]), tf.reshape(x1, xs[:-1] + [1]), tf.reshape(x2, xs[:-1] + [1])], 3)
 
 
 def get_var_maybe_avg(var_name, ema, **kwargs):
@@ -343,12 +343,12 @@ def gated_resnet(x, a=None, h=None, nonlinearity=concat_elu, conv=conv2d, init=F
 
 def down_shift(x):
     xs = int_shape(x)
-    return tf.concat([tf.zeros([xs[0], 1, xs[2], xs[3]]), x[:, :xs[1] - 1, :, :]], 1)
+    return tf.concat_v2([tf.zeros([xs[0], 1, xs[2], xs[3]]), x[:, :xs[1] - 1, :, :]], 1)
 
 
 def right_shift(x):
     xs = int_shape(x)
-    return tf.concat([tf.zeros([xs[0], xs[1], 1, xs[3]]), x[:, :, :xs[2] - 1, :]], 2)
+    return tf.concat_v2([tf.zeros([xs[0], xs[1], 1, xs[3]]), x[:, :, :xs[2] - 1, :]], 2)
 
 
 @add_arg_scope
