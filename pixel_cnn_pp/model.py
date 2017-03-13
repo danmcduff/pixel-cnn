@@ -35,7 +35,7 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
             # ////////// up pass through pixelCNN ////////
             xs = nn.int_shape(x)
             # add channel of ones to distinguish image from padding later on
-            x_pad = tf.concat([x, tf.ones(xs[:-1] + [1])], 3)
+            x_pad = tf.concat_v2([x, tf.ones(xs[:-1] + [1])], 3)
             u_list = [nn.down_shift(nn.down_shifted_conv2d(
                 x_pad, num_filters=nr_filters, filter_size=[2, 3]))]  # stream for pixels above
             ul_list = [nn.down_shift(nn.down_shifted_conv2d(x_pad, num_filters=nr_filters, filter_size=[1, 3])) +
@@ -75,7 +75,7 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
             for rep in range(nr_resnet):
                 u = nn.gated_resnet(
                     u, u_list.pop(), conv=nn.down_shifted_conv2d)
-                ul = nn.gated_resnet(ul, tf.concat(
+                ul = nn.gated_resnet(ul, tf.concat_v2(
                     [u, ul_list.pop()], 3), conv=nn.down_right_shifted_conv2d)
 
             u = nn.down_shifted_deconv2d(
@@ -86,7 +86,7 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
             for rep in range(nr_resnet + 1):
                 u = nn.gated_resnet(
                     u, u_list.pop(), conv=nn.down_shifted_conv2d)
-                ul = nn.gated_resnet(ul, tf.concat(
+                ul = nn.gated_resnet(ul, tf.concat_v2(
                     [u, ul_list.pop()], 3), conv=nn.down_right_shifted_conv2d)
 
             u = nn.down_shifted_deconv2d(
@@ -97,7 +97,7 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
             for rep in range(nr_resnet + 1):
                 u = nn.gated_resnet(
                     u, u_list.pop(), conv=nn.down_shifted_conv2d)
-                ul = nn.gated_resnet(ul, tf.concat(
+                ul = nn.gated_resnet(ul, tf.concat_v2(
                     [u, ul_list.pop()], 3), conv=nn.down_right_shifted_conv2d)
 
             x_out = nn.nin(tf.nn.elu(ul), 10 * nr_logistic_mix)
