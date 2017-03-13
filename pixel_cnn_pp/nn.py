@@ -334,7 +334,8 @@ def gated_resnet(x, a=None, h=None, nonlinearity=concat_elu, conv=conv2d, init=F
         c2 += tf.reshape(tf.matmul(h, hw), [xs[0], 1, 1, 2 * num_filters])
 
     # Is this 3,2 or 2,3 ?
-    a, b = tf.split(c2, 2, 3)
+    a, b = tf.split(3, 2, c2)
+#    a, b = tf.split(c2, 2, 3)
     c3 = a * tf.nn.sigmoid(b)
     return x + c3
 
