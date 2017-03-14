@@ -20,7 +20,7 @@ import pixel_cnn_pp.plotting as plotting
 from pixel_cnn_pp.model import model_spec
 import data.cifar10_data as cifar10_data
 import data.imagenet_data as imagenet_data
-import data.face_data as face_data
+#import data.face_data as face_data
 
 # -----------------------------------------------------------------------------
 parser = argparse.ArgumentParser()
