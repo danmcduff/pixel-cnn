@@ -20,6 +20,7 @@ import pixel_cnn_pp.plotting as plotting
 from pixel_cnn_pp.model import model_spec
 import data.cifar10_data as cifar10_data
 import data.imagenet_data as imagenet_data
+import data.face_data as face_data
 
 # -----------------------------------------------------------------------------
 parser = argparse.ArgumentParser()
@@ -79,12 +80,13 @@ tf.set_random_seed(args.seed)
 if args.data_set == 'imagenet' and args.class_conditional:
     raise("We currently don't have labels for the small imagenet data set")
 DataLoader = {'cifar': cifar10_data.DataLoader,
-              'imagenet': imagenet_data.DataLoader}[args.data_set]
+              'imagenet': imagenet_data.DataLoader,'face': face_data.DataLoader}[args.data_set]
 train_data = DataLoader(args.data_dir, 'train', args.batch_size * args.nr_gpu,
                         rng=rng, shuffle=True, return_labels=args.class_conditional)
 test_data = DataLoader(args.data_dir, 'test', args.batch_size *
                        args.nr_gpu, shuffle=False, return_labels=args.class_conditional)
 obs_shape = train_data.get_observation_size()  # e.g. a tuple (32,32,3)
+#print obs_shape
 assert len(obs_shape) == 3, 'assumed right now'
 
 # data place holders

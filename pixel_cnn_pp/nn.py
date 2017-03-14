@@ -41,6 +41,8 @@ def discretized_mix_logistic_loss(x, l, sum_all=True):
     nr_mix = int(ls[-1] / 10)
     logit_probs = l[:, :, :, :nr_mix]
     l = tf.reshape(l[:, :, :, nr_mix:], xs + [nr_mix * 3])
+
+
     means = l[:, :, :, :, :nr_mix]
     log_scales = tf.maximum(l[:, :, :, :, nr_mix:2 * nr_mix], -7.)
     coeffs = tf.nn.tanh(l[:, :, :, :, 2 * nr_mix:3 * nr_mix])
