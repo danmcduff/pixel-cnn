@@ -19,15 +19,15 @@ def load(data_dir, subset='train'):
 
     label_df = pandas.read_csv(data_dir+'labels.txt',sep='\t')
 
-    datax = np.zeros((64, 64, len(label_df), 3), dtype=np.float64)
-    datay = np.zeros((len(label_df)), dtype=np.float64)
+    datax = np.zeros((32, 32, len(label_df), 3), dtype=np.float32)
+    datay = np.zeros((len(label_df)), dtype=np.float32)
     X_data = [] 
     for index, row in label_df.iterrows():
         #print '~/data/'+'Cropped_AMFEDPLUS'+row[0]
         im = misc.imread(data_dir+row[0])
-	im2 = misc.imresize(im, [64,64])
+	    im2 = misc.imresize(im, [32,32])
         #datax = np.dstack((datax, im2))
-	datax[:,:,index,0] = im2
+        datax[:,:,index,0] = im2
         datax[:,:,index,1] = im2
         datax[:,:,index,2] = im2	
         #datay = np.append(datay, row[1])
