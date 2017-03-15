@@ -25,11 +25,11 @@ def load(data_dir, subset='train'):
     for index, row in label_df.iterrows():
         #print '~/data/'+'Cropped_AMFEDPLUS'+row[0]
         im = misc.imread(data_dir+row[0])
-	    im2 = misc.imresize(im, [32,32])
+        im2 = misc.imresize(im, [32,32])
         #datax = np.dstack((datax, im2))
         datax[:,:,index,0] = im2
         datax[:,:,index,1] = im2
-        datax[:,:,index,2] = im2	
+        datax[:,:,index,2] = im2
         #datay = np.append(datay, row[1])
         datay[index] = row[1]
         X_data.append (im2)
