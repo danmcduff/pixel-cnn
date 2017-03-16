@@ -19,13 +19,14 @@ def load(data_dir, subset='train'):
 
     label_df = pandas.read_csv(data_dir+'labels.txt',sep='\t')
 
-    datax = np.zeros((32, 32, len(label_df), 3), dtype=np.float32)
+    im_dim = 48
+    datax = np.zeros((im_dim, im_dim, len(label_df), 3), dtype=np.float32)
     datay = np.zeros((len(label_df)), dtype=np.float32)
     X_data = [] 
     for index, row in label_df.iterrows():
         #print '~/data/'+'Cropped_AMFEDPLUS'+row[0]
         im = misc.imread(data_dir+row[0])
-        im2 = misc.imresize(im, [32,32])
+        im2 = misc.imresize(im, [im_dim,im_dim])
         #datax = np.dstack((datax, im2))
         datax[:,:,index,0] = im2
         datax[:,:,index,1] = im2
@@ -37,12 +38,12 @@ def load(data_dir, subset='train'):
 
     
     if subset=='train':
-        trainx = datax[:12000,:,:,:]
-        trainy = datay[:12000]
+        trainx = datax[:150000,:,:,:]
+        trainy = datay[:150000]
         return trainx, np.array(trainy).astype(np.uint8)
     elif subset=='test':
-        testx = datax[12001:,:,:,:]
-        testy = datay[12001:]
+        testx = datax[150001:,:,:,:]
+        testy = datay[150001:]
         return testx, np.array(testy).astype(np.uint8)
 
 
