@@ -215,6 +215,7 @@ test_bpd = []
 lr = args.learning_rate
 with tf.Session() as sess:
     for epoch in range(args.max_epochs):
+        print('PROGRESS 00.00%')
         begin = time.time()
 
         # init
@@ -225,6 +226,7 @@ with tf.Session() as sess:
             train_data.reset()  # rewind the iterator back to 0 to do one full epoch
             sess.run(initializer, feed_dict)
             print('initializing the model...')
+            print('PROGRESS 00.00%')
             if args.load_params:
                 ckpt_file = args.save_dir + '/params_' + args.data_set + '.ckpt'
                 print('restoring parameters from', ckpt_file)
