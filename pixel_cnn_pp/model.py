@@ -73,6 +73,8 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
             u = u_list.pop()
             ul = ul_list.pop()
             for rep in range(nr_resnet):
+                print("RESNET: "+str(rep))
+                print("PROGRESS 00.00%")
                 u = nn.gated_resnet(
                     u, u_list.pop(), conv=nn.down_shifted_conv2d)
                 ul = nn.gated_resnet(ul, tf.concat_v2(
@@ -84,6 +86,8 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
                 ul, num_filters=nr_filters, stride=[2, 2])
 
             for rep in range(nr_resnet + 1):
+                print("RESNET: "+str(rep))
+                print("PROGRESS 00.00%")
                 u = nn.gated_resnet(
                     u, u_list.pop(), conv=nn.down_shifted_conv2d)
                 ul = nn.gated_resnet(ul, tf.concat_v2(
@@ -95,6 +99,8 @@ def model_spec(x, h=None, init=False, ema=None, dropout_p=0.5, nr_resnet=5, nr_f
                 ul, num_filters=nr_filters, stride=[2, 2])
 
             for rep in range(nr_resnet + 1):
+                print("RESNET: "+str(rep))
+                print("PROGRESS 00.00%")
                 u = nn.gated_resnet(
                     u, u_list.pop(), conv=nn.down_shifted_conv2d)
                 ul = nn.gated_resnet(ul, tf.concat_v2(
