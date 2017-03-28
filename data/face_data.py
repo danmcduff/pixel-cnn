@@ -38,12 +38,14 @@ def load(data_dir, subset='train'):
 
     
     if subset=='train':
-        trainx = datax[:150000,:,:,:]
-        trainy = datay[:150000]
+        trainx = datax[:50000,:,:,:]
+        trainy = datay[:50000]
         return trainx, np.array(trainy).astype(np.uint8)
     elif subset=='test':
-        testx = datax[150001:,:,:,:]
-        testy = datay[150001:]
+        testx = datax[50001:80000,:,:,:]
+        testy = datay[50001:80000]
+        #testx = datax[150001:,:,:,:]
+        #testy = datay[150001:]
         return testx, np.array(testy).astype(np.uint8)
 
 
